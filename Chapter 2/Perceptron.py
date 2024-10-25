@@ -33,7 +33,7 @@ class Perceptron(object):
         ------------
         X: {array like} shape= [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and n_features is the number of features.
-        Returns: int. either 1 or -1"""
+        Returns: {array like} shape= [n_samples] either 1 or -1"""
         return np.where(self.net_input(X) >= 0.0, 1, -1)
     
     def fit(self, X, Y):
