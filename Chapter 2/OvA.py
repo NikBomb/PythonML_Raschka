@@ -5,14 +5,16 @@ import Perceptron as pt
 
 
 
+
 class OvA(object):
     """
     Class for One-vs-All classification.
     """
-    def __init__(self, eta = 0.01, n_iter = 100, random_state = 1):
+    def __init__(self, eta = 0.01, n_iter = 100, random_state = 1, classifier = pt.Perceptron):
         self.eta = eta
         self.n_iter = n_iter
         self.random_state = random_state
+        self.classifier_class = classifier
     
     def fit(self, X, Y):
         """
@@ -30,9 +32,9 @@ class OvA(object):
         self.classifiers_ = []
         for i in self.classes_:
             y = np.where(Y == i, 1, -1)
-            perceptron = pt.Perceptron(eta=self.eta, n_iter=self.n_iter)
-            perceptron.fit(X, y)
-            self.classifiers_.append((i, perceptron))
+            classifier = self.classifier_class(eta=self.eta, n_iter=self.n_iter)
+            classifier.fit(X, y)
+            self.classifiers_.append((i, classifier))
         return self
     
     def predict(self, X):
